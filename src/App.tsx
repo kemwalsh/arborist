@@ -1,6 +1,7 @@
 import "./styles.css";
 import { Tree } from "react-arborist";
 import { data } from "./data";
+import { NodeRendererProps } from "react-arborist";
 
 function Node({ node, style, dragHandle }: NodeRendererProps<any>) {
   const updatedStyle = {
