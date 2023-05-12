@@ -1,18 +1,19 @@
 import "./styles.css";
-import { Tree } from "react-arborist";
+import { Tree, NodeRendererProps } from "react-arborist";
 import { data } from "./data";
-import { NodeRendererProps } from "react-arborist";
+
 
 function Node({ node, style, dragHandle }: NodeRendererProps<any>) {
   const updatedStyle = {
     ...style
   };
-  console.log(style);
+
 
   return (
-    <div style={updatedStyle} ref={dragHandle} onClick={() => node.toggle()}>
+    <div className="node-tree" style={updatedStyle} ref={dragHandle}
+    onClick={() => node.toggle()}>
       <div style={{ border: "1px solid" }}>
-        {node.isLeaf ? "👷🏻‍♀️" : "👷🏼"} {node.data.name}
+        {node.isLeaf ? <img style={{ width:'50px', height:'50px' }} src='/static/media/crow.ba05125a.png'></img> : <img style={{ width:'50px', height:'50px' }} src='/static/media/puffer.2149c31b.png'></img> } {node.data.name}
       </div>
     </div>
   );
