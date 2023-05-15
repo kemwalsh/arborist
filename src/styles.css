@@ -1,7 +1,14 @@
-.App {
+.container {
   font-family: lato;
+  width: 100%;
+  padding: 10px;
+  height: 100%;
 }
 
 .Tree {
   border: solid black;
+}
+
+.node {
+  width: 800px;
 }

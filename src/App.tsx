@@ -1,22 +1,26 @@
 import "./styles.css";
 import { Tree, NodeRendererProps } from "react-arborist";
-import { data } from "./data";
+import { data, imageData } from "./data";
 
 
-function Node({ node, style, dragHandle }: NodeRendererProps<any>) {
+function Node({ node, style, dragHandle, ...rest }: NodeRendererProps<any>) {
   const updatedStyle = {
-    ...style
+    ...style,
+    marginTop: 10
   };
-  // console.log(style);
-
 
   return (
-    <div className="node-tree" style={updatedStyle} ref={dragHandle}
-    onClick={() => node.toggle()}>
-      <div style={{ border: "1px solid" }}>
-        {node.isLeaf ? <img style={{ width:'30px', height:'30px', borderRight: "2px solid" }}src="/static/media/crow.ba05125a.png"></img> : <img style={{ width:'30px', height:'30px', borderRight: "2px solid" }} src='/static/media/puffer.2149c31b.png'></img> } 
-      </div>
-      <div>
+    <div 
+      className="node-tree" 
+      style={updatedStyle} 
+      ref={dragHandle}
+      onClick={() => node.toggle()}
+    >
+      <div style={{ border: "1px solid", display: 'flex', alignItems: 'center' }}>
+        <img
+          style={{ width:'30px', height:'100%', borderRight: "2px solid", marginRight: 10 }} 
+          src={ imageData[node.level].thumbnailUrl}
+        />
         {node.data.name}
       </div>
     </div>
@@ -25,8 +29,8 @@ function Node({ node, style, dragHandle }: NodeRendererProps<any>) {
 
 export default function App() {
   return (
-    <div className="App">
-      <Tree className="node" initialData={data} rowHeight={35}>
+    <div className="container" style={{ marginLeft: 10}}>
+      <Tree className="node" initialData={data} rowHeight={45}>
         {Node}
       </Tree>
     </div>
