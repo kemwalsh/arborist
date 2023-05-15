@@ -7,7 +7,7 @@ function Node({ node, style, dragHandle }: NodeRendererProps<any>) {
   const updatedStyle = {
     ...style
   };
-  console.log(style);
+  // console.log(style);
 
   return (
     <div style={updatedStyle} ref={dragHandle} onClick={() => node.toggle()}>

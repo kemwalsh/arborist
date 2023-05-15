@@ -3,7 +3,8 @@ import * as ReactDOMClient from "react-dom/client";
 
 import App from "./App";
 
-const rootElement : Element = document.getElementById("root");
+const rootElement : Element = document.getElementById("root") ?? document.body;
+
 const root = ReactDOMClient.createRoot(rootElement);
 
 root.render(
