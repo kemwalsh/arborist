@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/styles.css"],"names":[],"mappings":"AAAA,KACE,gBACF,CAEA,MACE,iBACF","file":"main.6e14929b.chunk.css","sourcesContent":[".App {\n  font-family: lato;\n}\n\n.Tree {\n  border: solid black;\n}\n"]}

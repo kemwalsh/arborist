@@ -13,7 +13,10 @@ function Node({ node, style, dragHandle }: NodeRendererProps<any>) {
     <div className="node-tree" style={updatedStyle} ref={dragHandle}
     onClick={() => node.toggle()}>
       <div style={{ border: "1px solid" }}>
-        {node.isLeaf ? <img style={{ width:'50px', height:'50px' }} src='/static/media/crow.ba05125a.png'></img> : <img style={{ width:'50px', height:'50px' }} src='/static/media/puffer.2149c31b.png'></img> } {node.data.name}
+        {node.isLeaf ? <img style={{ width:'30px', height:'30px', borderRight: "2px solid" }}src="/static/media/crow.ba05125a.png"></img> : <img style={{ width:'30px', height:'30px', borderRight: "2px solid" }} src='/static/media/puffer.2149c31b.png'></img> } 
+      </div>
+      <div>
+        {node.data.name}
       </div>
     </div>
   );
