@@ -5,3 +5,12 @@
 .Tree {
   border: solid black;
 }
+
+.node-tree {
+  display: flex;
+}
+
+.btn {
+  border-radius: 50%;
+  box-shadow: 1px 1px grey;
+}
