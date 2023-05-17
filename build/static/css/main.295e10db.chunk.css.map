@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/styles.css"],"names":[],"mappings":"AAAA,KACE,gBACF,CAEA,MACE,iBACF,CAEA,WACE,YACF,CAEA,KACE,iBAAkB,CAClB,uBACF","file":"main.295e10db.chunk.css","sourcesContent":[".App {\n  font-family: lato;\n}\n\n.Tree {\n  border: solid black;\n}\n\n.node-tree {\n  display: flex;\n}\n\n.btn {\n  border-radius: 50%;\n  box-shadow: 1px 1px grey;\n}"]}

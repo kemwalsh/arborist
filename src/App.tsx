@@ -29,7 +29,7 @@ return (
           onClick={() => node.isClosed ? node.open() : node.close() }>
             {node.isClosed ? '+' : '-' }
           </button>
-        <div style={{ border: "1px solid" }}></div>
+        <div style={{ border: "1px solid", width: 10 }}></div>
       </div>
     <div className="node-container">
       <div className="node-img">
@@ -52,7 +52,6 @@ return (
 }
 
 export default function App() {
-  const [data] = useState(() => generateTree());
   return (
   <div className="container" style={{ marginLeft: 10}}>
     <Tree className="node" initialData={data} rowHeight={62} height={1000} width={500}>
@@ -61,5 +60,3 @@ export default function App() {
       </div>
     );
   }
-
-
