@@ -1,7 +1,6 @@
 import "./styles.css";
 import { Tree, NodeRendererProps } from "react-arborist";
-import { generateTree, imageData } from "./data";
-import { useState } from "react";
+import { data, imageData } from "./data";
 
 
 function Node({ node, style, dragHandle, ...rest }: NodeRendererProps<any>) {
@@ -24,7 +23,7 @@ return (
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <button 
-          className="btn" 
+          className="expand-btn" 
           style={buttonStyle}
           disabled={!hasChildren}
           onClick={() => node.isClosed ? node.open() : node.close() }>
@@ -41,7 +40,11 @@ return (
         <span className="node-title">{node.data.name}</span>
         <span className="node-subtitle">{node.data.desc}</span>
       </div>
-
+      <div>
+        <button className="toolbar-btn" style={{ marginLeft: 30, marginRight: 30 }}>
+        ⋮
+        </button>
+      </div>
       </div>
     </div>
   </div>

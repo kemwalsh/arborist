@@ -97,6 +97,10 @@ body {
   color: #a9a9a9;
 }
 
-.btn {
+.expand-btn {
   border-radius: 50%;
+}
+
+.toolbar-btn {
+  height: 35px
 }
