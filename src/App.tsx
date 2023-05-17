@@ -33,6 +33,7 @@ return (
         <button 
           className="btn" 
           style={buttonStyle}
+          disabled={!hasChildren}
           onClick={handleToggle}>{Sign}
           </button>
         <div style={{ border: "1px solid" }}
@@ -42,12 +43,17 @@ return (
           }}
         ></div>
       </div>
-    <div style={{ border: "1px solid", display: 'flex', alignItems: 'center', paddingRight: '40px', borderRadius: "7px 10px 10px 7px" }}>
-      <img
-        style={{ width:'30px', height:'100%', borderRight: "2px solid", marginRight: 10, borderRadius: "7px 0 0 7px" }}
-        src={ imageData[node.level].thumbnailUrl}
-      />
-      {node.data.name}
+    <div className="node-container">
+      <div className="node-img">
+        <img src={ imageData[node.level]}/>
+      </div>
+      <div className="node-container">
+      <div className="node-label">
+        <span className="node-title">{node.data.name}</span>
+        <span className="node-subtitle">{node.data.desc}</span>
+      </div>
+
+      </div>
     </div>
   </div>
 );
@@ -56,7 +62,7 @@ return (
 export default function App() {
   return (
   <div className="container" style={{ marginLeft: 10}}>
-    <Tree className="node" initialData={data} rowHeight={45}>
+    <Tree className="node" initialData={data} rowHeight={62}>
       {Node}
       </Tree>
       </div>
