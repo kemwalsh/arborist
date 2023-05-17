@@ -1,6 +1,6 @@
 import "./styles.css";
 import { Tree, NodeRendererProps } from "react-arborist";
-import { data, imageData } from "./data";
+import { generateTree, imageData } from "./data";
 import { useState } from "react";
 
 
@@ -49,6 +49,7 @@ return (
 }
 
 export default function App() {
+  const [data] = useState(() => generateTree());
   return (
   <div className="container" style={{ marginLeft: 10}}>
     <Tree className="node" initialData={data} rowHeight={62} height={1000} width={500}>
@@ -57,3 +58,5 @@ export default function App() {
       </div>
     );
   }
+
+
