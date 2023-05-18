@@ -2,6 +2,7 @@ import "./styles.css";
 import { Tree, NodeRendererProps } from "react-arborist";
 import { generateTree, imageData, Node as NodeShape } from "./data";
 import React, { useState } from "react";
+import { OpenMap } from "react-arborist/dist/state/open-slice";
 
 
 function Node({ node, style, dragHandle, ...rest }: NodeRendererProps<any>) {
@@ -9,18 +10,18 @@ function Node({ node, style, dragHandle, ...rest }: NodeRendererProps<any>) {
   const updatedStyle = { ...style, marginTop: 10};
   
 
-const hasChildren = node.children && node.children.length > 0;
+  const hasChildren = node.children && node.children.length > 0;
 
-const buttonStyle = {
-  backgroundColor: node.isClosed ? "#75d075" : "#f17979",
-  opacity: hasChildren ? 1 : 0,
-};
+  const buttonStyle = {
+    backgroundColor: node.isClosed ? "#75d075" : "#f17979",
+    opacity: hasChildren ? 1 : 0,
+  };
 
-return (
-  <div
-    className="node-tree"
-    style={updatedStyle}
-    ref={dragHandle}
+  return (
+    <div
+      className="node-tree"
+      style={updatedStyle}
+      ref={dragHandle}
     >
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <button 
@@ -55,15 +56,34 @@ return (
 export default function App() {
 
   const [data, setData] = useState<NodeShape[]>([]);
+  const [initialOpenState, setInitialOpenState] = useState({});
 
   React.useEffect(() => {
-    setData(generateTree());
+    const randomTree = generateTree();
+    setData(randomTree);
+    // this will make sure nothing is expanded past level 2
+    const openState : OpenMap = {};
+    const root = randomTree[0];
+    if (!root.children) return;
+    for (let { id } of root.children) {
+      openState[id] = false;
+    }
+    setInitialOpenState(openState);
   }, []);
+
+
   if (!data.length) return <p>...loading</p>;
   
     return (
       <div className="container" style={{ marginLeft: 10}}>
-        <Tree className="node" initialData={data} rowHeight={62} height={1000} width={500}>
+        <Tree 
+          className="node" 
+          initialData={data} 
+          initialOpenState={initialOpenState}
+          rowHeight={62} 
+          height={1000} 
+          width={500}
+        >
           {Node}
           </Tree>
       </div>
