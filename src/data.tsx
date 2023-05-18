@@ -1,45 +1,87 @@
 import { faker } from '@faker-js/faker';
 
-export const data = [
+const randomNum = (max: number) => Math.floor(Math.random() * max) 
+const MAX_DEPTH = 5;
 
-{ id: "1", name: faker.person.fullName(), desc: faker.company.catchPhrase()},
-{ id: "2", name: faker.person.fullName(), desc: faker.company.catchPhrase()},
-{ id: "3",
-  name: faker.person.fullName(), desc: faker.company.catchPhrase(),
-    children: [
-      { id: "c1", name: faker.person.fullName(), desc: faker.company.catchPhrase()},
-      { id: "c2", name: faker.person.fullName(), desc: faker.company.catchPhrase() },
-      { id: "c3", name: faker.person.fullName(), desc: faker.company.catchPhrase(),
-        children: [
-          {
-            id: "d111",
-            name: faker.person.fullName(), desc: faker.company.catchPhrase(),
-            children: [
-              { id: 'e1111',
-              name: faker.person.fullName(), desc: faker.company.catchPhrase(),
-              children: [
-                {
-                  id: 'f1111',
-                  name: faker.person.fullName(), desc: faker.company.catchPhrase()
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
-},
-{
-  id: "4",
-  name: faker.person.fullName(), desc: faker.company.catchPhrase(),
-  children: [
-    { id: "d1", name: faker.person.fullName(), desc: faker.company.catchPhrase()},
-    { id: "d2", name: faker.person.fullName(), desc: faker.company.catchPhrase()},
-    { id: "d3", name: faker.person.fullName(), desc: faker.company.catchPhrase() }
-  ]
+export type Node = {
+  id: string,
+  name: string,
+  desc?: string,
+  children?: Node[],
+  isOpen?: boolean,
 }
-];
+
+// const ROOT_NODE : Node = {
+//   id: "0",
+//   name: "Root Node",
+//   desc: "I am the orginal",
+//   children: []
+// };
+
+const generateNode = (currentLevel: number) => {
+  const numOfChildren = randomNum(5);
+
+  const node: Node = {
+    id: faker.string.uuid(),
+    name: faker.person.fullName(),
+    desc: faker.company.catchPhrase(),
+    isOpen: currentLevel === 0
+  };
+
+  if (currentLevel === MAX_DEPTH || !numOfChildren) return node;
+
+    node.children = [];
+
+    for (let i = 0; i < numOfChildren; i++) {
+      node.children.push(generateNode(currentLevel + 1))
+    }
+
+    return node;
+  
+}
+
+export const generateTree = () => [generateNode(0)];
+
+// export const data = [
+
+// { id: "1", name: faker.person.fullName(), desc: faker.company.catchPhrase()},
+// { id: "2", name: faker.person.fullName(), desc: faker.company.catchPhrase()},
+// { id: "3",
+//   name: faker.person.fullName(), desc: faker.company.catchPhrase(),
+//     children: [
+//       { id: "c1", name: faker.person.fullName(), desc: faker.company.catchPhrase()},
+//       { id: "c2", name: faker.person.fullName(), desc: faker.company.catchPhrase()},
+//       { id: "c3", name: faker.person.fullName(), desc: faker.company.catchPhrase(),
+//         children: [
+//           {
+//             id: "d111",
+//             name: faker.person.fullName(), desc: faker.company.catchPhrase(),
+//             children: [
+//               { id: 'e1111',
+//               name: faker.person.fullName(), desc: faker.company.catchPhrase(),
+//               children: [
+//                 {
+//                   id: 'f1111',
+//                   name: faker.person.fullName(), desc: faker.company.catchPhrase()
+//                 }
+//               ]
+//             }
+//           ]
+//         }
+//       ]
+//     }
+//   ]
+// },
+// {
+//   id: "4",
+//   name: faker.person.fullName(), desc: faker.company.catchPhrase(),
+//   children: [
+//     { id: "d1", name: faker.person.fullName(), desc: faker.company.catchPhrase()},
+//     { id: "d2", name: faker.person.fullName(), desc: faker.company.catchPhrase()},
+//     { id: "d3", name: faker.person.fullName(), desc: faker.company.catchPhrase() }
+//   ]
+// }
+// ];
 
 export const imageData = [
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAWCAYAAADXYyzPAAAAAklEQVR4AewaftIAAAMVSURBVMXBb2iUdQDA8e89z3Pbs3vuNje8rW3d2n9Jss2zcqEkGTWmDOc06EURNLCICIpeSC9yLwp625veCc2y1VIxbGmhDZKFSIG0zt2fmS3Zzd3d5s3ds/v3PM/PgYVH3OQ6X9znYxNCUAoSRdKDofrIt989aWUyCkVQKEA6PK9kYosaUA04AHXx/E9bY+M/eMtq3RWypt0CkoAOLDnaWrOy5rC4D4UChEeOV4Y/H/UCA0A30IkQNUIIm2/ozUOAD5gGfgNObPni6HyltzvNfcjDw8Osx8pm5WtHPupfvDDxlrmSeA0htiGEByFcCKEANoSQEMKFEB6E6EKIPQnfdLXi1Ja1TR0R1qGwjtTsjbr5r7/ZvTTx88FMLNYDNLA+DdAAN9Ci+wPqzbFTVcIwz9Tu758kD4U8ktf/qoqd/XHr3NFjh4BtgIv/5/Hly79qVjJZZt9YM1fp7Q7LmpYhh0Qe0fFzHbOffPoCsANQAYt7BGACJiAAA7AAwV0CMIDmlSlfb+Cdw4N6IFRlpTPkksivA9gMXAGuAFHuEsAqMAPcAFLA78ACkAFMIAH4gRnAZer6K8H33m9cujBhJ4dCfkFHe+to49CrEdZEz5xtiv9y6WlgO3D6oRcHpyzD6IlPXtrneWPo45tjp9y6P9AHdAKfeV4fCqnNTVl9OqCFj31pT82Fl4yVhI0cCnk4Nz86Izudf9cN7ouyRipXN6iNDVeBP4Dv6w4OzOqBkDMx5XvO3d93HiFk3R9cANqA0boDAxH1EU9aDwRlK5kqZ01Fa4tFDoU8anbvWiaHe29v3L239yJwkX/ogRD/qn/5pRhwkv/QNnWa7R9+sEoeEiUiUSISJSJRIgoFEIZhE6YlARJgAjZhGBIPQKEA4ZHjD0fHz3UDjwGTQG32Vnyn7HBQLIUCuLq23F69dl1ZOHn6WWA74ACSjva2E0CaIkgUoPIJ73L1Mzv+BPxAGXBbbfJMVu/aOWaz29MUQaFAkqpeLW+oHwZagOjGvucjze++naJICgXa0POU0fXVSByYAiyposLkAdwBFaAw4OOQEugAAAAASUVORK5CYII=",

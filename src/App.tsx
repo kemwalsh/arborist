@@ -1,6 +1,7 @@
 import "./styles.css";
 import { Tree, NodeRendererProps } from "react-arborist";
-import { data, imageData } from "./data";
+import { generateTree, imageData, Node as NodeShape } from "./data";
+import React, { useState } from "react";
 
 
 function Node({ node, style, dragHandle, ...rest }: NodeRendererProps<any>) {
@@ -40,8 +41,8 @@ return (
         <span className="node-title">{node.data.name}</span>
         <span className="node-subtitle">{node.data.desc}</span>
       </div>
-      <div>
-        <button className="toolbar-btn" style={{ marginLeft: 30, marginRight: 30 }}>
+      <div style={{ marginRight: 3, textAlign: 'right' }}>
+        <button className="toolbar-btn" >
         ⋮
         </button>
       </div>
@@ -52,11 +53,19 @@ return (
 }
 
 export default function App() {
-  return (
-  <div className="container" style={{ marginLeft: 10}}>
-    <Tree className="node" initialData={data} rowHeight={62} height={1000} width={500}>
-      {Node}
-      </Tree>
+
+  const [data, setData] = useState<NodeShape[]>([]);
+
+  React.useEffect(() => {
+    setData(generateTree());
+  }, []);
+  if (!data.length) return <p>...loading</p>;
+  
+    return (
+      <div className="container" style={{ marginLeft: 10}}>
+        <Tree className="node" initialData={data} rowHeight={62} height={1000} width={500}>
+          {Node}
+          </Tree>
       </div>
-    );
-  }
+      );
+    }
